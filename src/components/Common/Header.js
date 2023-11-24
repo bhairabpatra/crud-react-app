@@ -4,7 +4,7 @@ import "./Common.css";
 export default function Header() {
   return (
     <div>
-      <nav className="navbar navbar-expand-sm navbar-primary bg-primary">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand" href="#">
             <span className="navbar-text">React CRUD</span>

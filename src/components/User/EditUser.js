@@ -107,7 +107,7 @@ const EditUser = () => {
           />
         </div>
         <button type="submit" className="btn btn-primary submit-btn">
-          Submit
+          EDIT
         </button>
       </form>
     </div>
