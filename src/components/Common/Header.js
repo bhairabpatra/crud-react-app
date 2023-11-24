@@ -19,7 +19,7 @@ export default function Header() {
           </button>
           <div className="collapse navbar-collapse" id="mynavbar">
             <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
+              <li className="nav-item">
                 <Link className="nav-link" to="/">
                   Home
                 </Link>

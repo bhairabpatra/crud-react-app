@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import {useNavigate } from "react-router-dom";
+import Loader from '../Common/Loader';
 import './User.css';
 const CreateUser = () => {
     const navigate = useNavigate();
     const createUserApi = "http://localhost:3000/user"
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -14,7 +17,6 @@ const CreateUser = () => {
         event.preventDefault();
         const { name, value } = event.target;
         console.log(name, value)
-       
         setUser({ ...user, [name]: value });
     }
 
@@ -22,6 +24,7 @@ const CreateUser = () => {
         event.preventDefault();
         console.log(user)
         try {
+            setIsLoading(true);
             const response = await fetch(createUserApi, {
                 method: 'POST',
                 headers: {
@@ -39,13 +42,17 @@ const CreateUser = () => {
             }
 
         } catch (error) {
-            console.error('Error submitting the form:', error);
+            setError(error.message);
+        } finally{
+            setIsLoading(false);
         }
     }
 
     return (
         <div className='user-form'>
             <div className='heading'>
+            {isLoading && <Loader />}
+            {error && <p>Error: {error}</p>}
                 <p>User Form</p>
             </div>
             <form onSubmit={handelSubmit}>

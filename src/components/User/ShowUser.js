@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Loader from "../Common/Loader";
+
 const ShowUser = () => {
   const showUserApi = "http://localhost:3000/user";
 
   const [user, setUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handelDelete = (id) => {
+  const handelDelete = async (id) => {
     console.log("id : -", id);
-    axios
-      .delete(showUserApi.concat("/") + id)
-      .then(() => {
-        console.log("item Delete");
-        getUsers();
-      })
-      .catch((err) => {
-        console.log("item Delete", err);
+    setIsLoading(true);
+    try {
+      const response = await fetch(showUserApi.concat("/") + id, {
+        method: "DELETE",
       });
+      if (!response.ok) {
+        throw new Error("Failed to delete item");
+      }
+      setUser(user.filter((item) => item.id !== id));
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -39,6 +48,8 @@ const ShowUser = () => {
   } else {
     return (
       <div className="mt-5">
+        {isLoading && <Loader />}
+        {error && <p>Error: {error}</p>}
         <table className="table table-striped">
           <thead>
             <tr>
